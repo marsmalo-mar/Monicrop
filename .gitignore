@@ -1,0 +1,34 @@
+node_modules/
+.next/
+.env*
+!.env.example
+!.env.demo.example
+next-env.d.ts
+*.tsbuildinfo
+uploads/
+test-results/
+*.log
+
+# Local database exports and private images; publish only the clean schema.
+*.sql
+!/database/schema.sql
+/profile/
+/pics/
+/img/
+*.pem
+*.key
+*.p12
+*.pfx
+*.bak
+*.zip
+*.sql.gz
+*.7z
+*.tar.gz
+
+# PHP rollback is local-only. The public repository contains the Next.js app.
+/legacy/
+/*.php
+/includes/
+/assets/
+/style.css
+/logo.png
