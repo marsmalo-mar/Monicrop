@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -24,6 +25,9 @@ export function WorkspaceShell({
   const router = useRouter();
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
+  const [failedProfilePicture, setFailedProfilePicture] = useState<string | null>(
+    null,
+  );
   const links =
     user.user_type === "admin"
       ? [{ href: "/accounts", label: "Accounts", icon: UsersRound }]
@@ -103,7 +107,21 @@ export function WorkspaceShell({
             aria-label="View your profile"
           >
             <span className="initial">
-              {displayName(user).charAt(0).toUpperCase()}
+              {user.profile_pic && failedProfilePicture !== user.profile_pic ? (
+                <Image
+                  key={user.profile_pic}
+                  src={`/api/media?path=${encodeURIComponent(user.profile_pic)}`}
+                  alt="Your profile photo"
+                  width={36}
+                  height={36}
+                  unoptimized
+                  className="size-9 rounded-full object-cover"
+                  onError={() => setFailedProfilePicture(user.profile_pic)}
+                  onLoad={() => setFailedProfilePicture(null)}
+                />
+              ) : (
+                displayName(user).charAt(0).toUpperCase()
+              )}
             </span>
             <span className="hidden sm:block">{displayName(user)}</span>
           </Link>
